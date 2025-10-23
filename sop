@@ -1,0 +1,68 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity prueba is
+    port (
+        A3, A2, A1, A0 : in std_logic;
+        s : out std_logic
+    );
+end entity;
+
+architecture arq_prueba of prueba is
+    signal S1, S2, S3, S4 : std_logic;
+begin
+    S1 <= (NOT A3) AND (NOT A2) AND (NOT A1) AND A0;
+    S2 <= (NOT A3) AND A2 AND (NOT A1) AND A0;
+    S3 <= (NOT A3) AND A2 AND A1 AND A0;
+    S4 <= A3 AND (NOT A2) AND (NOT A1) AND A0;
+    S <= S1 OR S2 OR S3 OR S4;
+end architecture;
+
+
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity tb_prueba is
+end entity;
+
+architecture arq_tb_prueba of tb_prueba is
+    component prueba is
+        port (
+            A3, A2, A1, A0 : in std_logic;
+            s : out std_logic
+        );
+    end component;
+
+    signal P, L, M, N, S : std_logic;
+begin
+    prueba1 : prueba
+        port map (
+            A3 => P,
+            A2 => L,
+            A1 => M,
+            A0 => N,
+            s  => S
+        );
+
+    process
+    begin
+        P <= '0'; L <= '0'; M <= '0'; N <= '0'; wait for 10 ns;
+        P <= '0'; L <= '0'; M <= '0'; N <= '1'; wait for 10 ns;
+        P <= '0'; L <= '0'; M <= '1'; N <= '0'; wait for 10 ns;
+        P <= '0'; L <= '0'; M <= '1'; N <= '1'; wait for 10 ns;
+        P <= '0'; L <= '1'; M <= '0'; N <= '0'; wait for 10 ns;
+        P <= '0'; L <= '1'; M <= '0'; N <= '1'; wait for 10 ns;
+        P <= '0'; L <= '1'; M <= '1'; N <= '0'; wait for 10 ns;
+        P <= '0'; L <= '1'; M <= '1'; N <= '1'; wait for 10 ns;
+        P <= '1'; L <= '0'; M <= '0'; N <= '0'; wait for 10 ns;
+        P <= '1'; L <= '0'; M <= '0'; N <= '1'; wait for 10 ns;
+        P <= '1'; L <= '0'; M <= '1'; N <= '0'; wait for 10 ns;
+        P <= '1'; L <= '0'; M <= '1'; N <= '1'; wait for 10 ns;
+        P <= '1'; L <= '1'; M <= '0'; N <= '0'; wait for 10 ns;
+        P <= '1'; L <= '1'; M <= '0'; N <= '1'; wait for 10 ns;
+        P <= '1'; L <= '1'; M <= '1'; N <= '0'; wait for 10 ns;
+        P <= '1'; L <= '1'; M <= '1'; N <= '1'; wait for 10 ns;
+        wait; -- Detiene la simulación correctamente
+    end process;
+end architecture;
